@@ -27,11 +27,11 @@ function initGame() {
     box.innerText = "";
     boxes[index].style.pointerEvents = "all";
     //to remove color
-    box.classList = `box box${index +1}`;
+    box.classList = `box box${index + 1}`;
   });
 
   newGameBtn.classList.remove("active");
-  
+
   gameInfo.innerText = `Current Player - ${currentplayer}`;
 }
 
@@ -44,8 +44,6 @@ function swapTurn() {
 
   //UI update
   gameInfo.innerText = `Current Player - ${currentplayer}`;
-  
-
 }
 
 function handleClick(index) {
@@ -76,35 +74,32 @@ newGameBtn.addEventListener("click", () => {
 function checkGameover() {
   let answer = "";
 
-  winningPosition.forEach((position ) => {
-    if ( (gameGrid[position[0]] != "" ||  gameGrid[position[1]] != "" || gameGrid[position[2]] != "" )
-      &&  (gameGrid[position[0]] == gameGrid[position[1]] ) && ( gameGrid[position[1]] ==gameGrid[position[2]]  )) {
-
-        // check if winner is X
-        if( gameGrid[position[0]] == "X") 
-        {
-          answer =  "X" ;
-        }
-        else{
-          answer ="O";
-        }
-
-        //disable pointer event
-        boxes.forEach((box) => {
-          box.style.pointerEvents = "none";
-        })
-        // now we know the winner 
-        boxes[position[0]].classList.add("win");
-        boxes[position[1]].classList.add("win");
-        boxes[position[2]].classList.add("win"); 
-        
-        
+  winningPosition.forEach((position) => {
+    if (
+      (gameGrid[position[0]] != "" ||
+        gameGrid[position[1]] != "" ||
+        gameGrid[position[2]] != "") &&
+      gameGrid[position[0]] == gameGrid[position[1]] &&
+      gameGrid[position[1]] == gameGrid[position[2]]
+    ) {
+      // check if winner is X
+      if (gameGrid[position[0]] == "X") {
+        answer = "X";
+      } else {
+        answer = "O";
       }
-      
 
-
+      //disable pointer event
+      boxes.forEach((box) => {
+        box.style.pointerEvents = "none";
+      });
+      // now we know the winner
+      boxes[position[0]].classList.add("win");
+      boxes[position[1]].classList.add("win");
+      boxes[position[2]].classList.add("win");
+    }
   });
-  if (answer != ""){
+  if (answer != "") {
     gameInfo.innerText = `Winner Player - ${answer}`;
     newGameBtn.classList.add("active");
     return;
@@ -112,19 +107,15 @@ function checkGameover() {
   //when there is no winner
   let fillcout = 0;
   gameGrid.forEach((box) => {
-    if(box != "")
-    {fillcout++ ;}
+    if (box != "") {
+      fillcout++;
+    }
   });
 
-  // now if the board is completely filled 
+  // now if the board is completely filled
 
-  if (fillcout == 9 )
-  {
+  if (fillcout == 9) {
     gameInfo.innerText = "Game Tied !";
     newGameBtn.classList.add("active");
-
   }
-  
-
-
 }
